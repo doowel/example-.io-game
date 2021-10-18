@@ -114,7 +114,10 @@ class Game {
     return {
       t: Date.now(),
       me: player.serializeForUpdate(),
-      others: nearbyPlayers.map(p => p.serializeForUpdate()),
+      others: nearbyPlayers.map(p => ({
+        ...p.serializeForUpdate(),
+        distanceToMe: p.distanceTo(player),
+      })),
       bullets: nearbyBullets.map(b => b.serializeForUpdate()),
       leaderboard,
     };
