@@ -22,6 +22,33 @@ class Object {
     this.direction = dir;
   }
 
+  setPos(pos) {
+    let targetX = pos.x;
+    let targetY = pos.y;
+    let startX = this.x;
+    let startY = this.y
+    let diffX = targetX - startX;
+    let diffY = targetY - startY;
+    let duration = 1000;
+    
+    let intervalId = null;
+    let startTime = Date.now();
+    intervalId = setInterval(() => {
+      let currentTime = Date.now();
+      let elapsedTime = currentTime - startTime;
+      if (elapsedTime >= duration) {
+        this.x = targetX;
+        this.y = targetY;
+        clearInterval(intervalId);
+        return;
+      }
+      this.x = startX + diffX * (elapsedTime / duration);
+      this.y = startY + diffY * (elapsedTime / duration);
+    }, 1000/60) // 60fps
+    // this.x = pos.x;
+    // this.y = pos.y;
+  }
+
   serializeForUpdate() {
     return {
       id: this.id,
